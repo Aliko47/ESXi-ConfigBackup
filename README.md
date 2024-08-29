@@ -6,6 +6,15 @@ Furthermore, the script can be used to run automatically on a daily basis using 
 
 The credentials for the ESXi-Host/vCenter is stored in the VICredentialStore so that no passwords need to be set in the script. These access data can also be stored with the script in the VICredentialStore. 
 
+The script has 3 parameters:
+```powershell
+.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -ChangePwOrAddUser $true/$false
+```
+
+- **Mandatory** Username: The Username which need to loggin to vCenter/ESXi-Host
+- **Mandatory** vCenter: vCenter/ESXi-Host Hostname or IP-Adress
+- **Not Mandatory** ChangePwOrAddUser: Boolean. If you want to change a password which is stored in VICredentialStore or add a new user to it. Otherwise leave it without this parameters.
+
 
 ## Requirements
 
@@ -28,7 +37,6 @@ Testet on PowerShell Version:
 - 5.1 Build 14393 Revision 7254
 - 5.1 Build 20348 Revision 2652
 ## Usage
-
 ### Befor starting
 Befor starting, the script should be modified in the following lines:
 
@@ -73,6 +81,11 @@ If you now type in ```whoami``` you will see, tha you are:
 nt authority\system
 ```
 Now you just need to repeat steps from [First start](https://github.com/Aliko47/ESXi-ConfigBackup/tree/main?tab=readme-ov-file#first-start-firststart)
+
+### Change Passwort or add User
+...
+## Logging
+...
 ## Authors
 
 - [@Aliko47](https://github.com/Aliko47)
