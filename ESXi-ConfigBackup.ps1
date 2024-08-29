@@ -28,13 +28,6 @@ If ([System.Diagnostics.EventLog]::SourceExists('SAR') -eq $False) {
 #Check if First Run
 if (-not (Test-Path $FirstRun)) {
 
-    #Create First Run log file
-    New-Item -Path $FirstRun -ItemType File -Force
-    Add-Content -Path $FirstRun -Value "--------------------!First run!---------------------------------------------------------------"
-    Add-Content -Path $FirstRun -Value (Get-Date -Format "dddd dd/MM/yyyy HH:mm")
-    Add-Content -Path $FirstRun -Value "Do not remove this file! Except, you know what you are doing!"
-    Add-Content -Path $FirstRun -Value "----------------------------------------------------------------------------------------------"
-    
     #Create Backup log file
     New-Item -Path $LOGFile -ItemType File -Force
 
@@ -52,6 +45,13 @@ if (-not (Test-Path $FirstRun)) {
     #Done
     Write-Host "All necessary settings are configured." -NoNewline -ForegroundColor Green
     Write-Host "Please rerun the script to start the ESXi Config Backup!" -ForegroundColor Green
+
+    #Create First Run log file
+    New-Item -Path $FirstRun -ItemType File -Force
+    Add-Content -Path $FirstRun -Value "--------------------!First run!---------------------------------------------------------------"
+    Add-Content -Path $FirstRun -Value (Get-Date -Format "dddd dd/MM/yyyy HH:mm")
+    Add-Content -Path $FirstRun -Value "Do not remove this file! Except, you know what you are doing!"
+    Add-Content -Path $FirstRun -Value "----------------------------------------------------------------------------------------------"
 
     exit
 
