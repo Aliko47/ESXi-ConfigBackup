@@ -35,9 +35,9 @@ if (-not (Test-Path $FirstRun)) {
     Import-Module -Name VMware.vimAutomation.Core
 
     #Configure Settings
-    Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -Confirm:$false
-    Set-PowerCLIConfiguration -DefaultVIServerMode single -Confirm:$false 
-    Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false  
+    Set-PowerCLIConfiguration -Scope AllUser -ParticipateInCEIP $false -Confirm:$false
+    Set-PowerCLIConfiguration -Scope AllUser -DefaultVIServerMode single -Confirm:$false 
+    Set-PowerCLIConfiguration -Scope AllUser -InvalidCertificateAction Ignore -Confirm:$false
 
     #Create new user in VIStore
     New-VICredentialStoreItem -Host $vCenter -User $Username -Password ((get-credential).GetNetworkCredential().password)
