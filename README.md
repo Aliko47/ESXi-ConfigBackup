@@ -38,7 +38,7 @@ Befor starting, the script should be modified in the following lines:
 17 #Number of days before current date
 18 $Days = 14 #how many backups of the last few days should be kept?
 ```
-### First start {#firststart}
+### First start
 When running the script for the first time, it must be started manually as administrator. Open a new PowerShell window as administrator and go to the script path. Then run the following:
 ```powershell
 .\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld>
@@ -72,7 +72,7 @@ If you now type in ```whoami``` you will see, tha you are:
 ```powershell
 nt authority\system
 ```
-Now you just need to repeat steps from [First start](#firststart)
+Now you just need to repeat steps from [First start](https://github.com/Aliko47/ESXi-ConfigBackup/tree/main?tab=readme-ov-file#first-start-firststart)
 ## Authors
 
 - [@Aliko47](https://github.com/Aliko47)
