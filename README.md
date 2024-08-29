@@ -36,6 +36,12 @@ The script was tested on the following operating systems:
 Testet on PowerShell Version: 
 - 5.1 Build 14393 Revision 7254
 - 5.1 Build 20348 Revision 2652
+
+Testet on vCenter Server version:
+- vCenter Server v6.7
+- vCenter Server v7.0.3
+- vCenter Server v8.0.3
+
 ## Usage
 ### Befor starting
 Befor starting, the script should be modified in the following lines:
