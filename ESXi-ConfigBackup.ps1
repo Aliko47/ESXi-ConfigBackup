@@ -19,14 +19,14 @@ $Days = 14
 #Calculate cutoff date
 $ExpiredDate = (Get-Date).AddDays(-$Days)
 
-#Create EventLog TAG
-If ([System.Diagnostics.EventLog]::SourceExists('SAR') -eq $False) {
-    #If Eventlog Logname not exist, create it
-    New-EventLog -LogName Application -Source 'SAR'
-}
-
 #Check if First Run
 if (-not (Test-Path $FirstRun)) {
+
+    #Create EventLog TAG
+    If ([System.Diagnostics.EventLog]::SourceExists('SAR') -eq $False) {
+        #If Eventlog Logname not exist, create it
+        New-EventLog -LogName Application -Source 'SAR'
+    }
 
     #Create Backup log file
     New-Item -Path $LOGFile -ItemType File -Force
@@ -89,7 +89,7 @@ if ($ChangePwOrAddUser) {
             Add-Content -Path $LOGFile -Value "Username: $Username"
             Add-Content -Path $LOGFile -Value "----------------------------------------------------------------------------------------------"
 
-            Write-EventLog -LogName Application -Source "SAR" -EventID 1048 -EntryType Information -Message "VICredentials: Changed password from: $Username"
+            Write-EventLog -LogName Application -Source "SAR" -EventID 1049 -EntryType Information -Message "VICredentials: Changed password from: $Username"
 
             Write-Host "Password for $Username changed!" -ForegroundColor Green
 
@@ -108,7 +108,7 @@ if ($ChangePwOrAddUser) {
             Add-Content -Path $LOGFile -Value "Username: $Username"
             Add-Content -Path $LOGFile -Value "----------------------------------------------------------------------------------------------"
 
-            Write-EventLog -LogName Application -Source "SAR" -EventID 1049 -EntryType Information -Message "VICredentials: New User added: $Username"
+            Write-EventLog -LogName Application -Source "SAR" -EventID 1050 -EntryType Information -Message "VICredentials: New User added: $Username"
 
             Write-Host "Added new user to VICredentialsStore: $Username" -ForegroundColor Green
 
