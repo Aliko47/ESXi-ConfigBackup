@@ -5,22 +5,22 @@ Param
     [parameter(Position=1,Mandatory=$true)]
     [String] $Username,
     [parameter(Position=2,Mandatory=$false)]
+    [bool] $FirstRun,
+    [parameter(Mandatory=$false)]
     [bool] $ChangePwOrAddUser
   )
 
-#First-Run Log File
-$FirstRun = "$PSScriptRoot\logs\FirstRun.log"
 #Log file
 $LOGFile = "$PSScriptRoot\logs\Backups.log"
-#Root Path
-$BackupRootPath = "$PSScriptRoot\ESXi-Hosts"
+#Backup Root Path. If it is an shared drive, make sure that you also have access to it
+$BackupRootPath = "E:\vCenter_File-Based_Backup\ESXi-Hosts"
 #Number of days before current date
 $Days = 14 
 #Calculate cutoff date
 $ExpiredDate = (Get-Date).AddDays(-$Days)
 
 #Check if First Run
-if (-not (Test-Path $FirstRun)) {
+if ($FirstRun){
 
     #Create EventLog TAG
     If ([System.Diagnostics.EventLog]::SourceExists('SAR') -eq $False) {
@@ -28,40 +28,24 @@ if (-not (Test-Path $FirstRun)) {
         New-EventLog -LogName Application -Source 'SAR'
     }
 
-    #Create Backup log file
-    New-Item -Path $LOGFile -ItemType File -Force
-
     #Import VMware PowerCLI Module
     Import-Module -Name VMware.vimAutomation.Core
 
     #Configure Settings
     Set-PowerCLIConfiguration -Scope AllUser -ParticipateInCEIP $false -Confirm:$false
     Set-PowerCLIConfiguration -Scope AllUser -DefaultVIServerMode single -Confirm:$false 
-    Set-PowerCLIConfiguration -Scope AllUser -InvalidCertificateAction Ignore -Confirm:$false
+    Set-PowerCLIConfiguration -Scope AllUser -InvalidCertificateAction Ignore -Confirm:$false  
 
     #Create new user in VIStore
     New-VICredentialStoreItem -Host $vCenter -User $Username -Password ((get-credential).GetNetworkCredential().password)
+
+    Write-EventLog -LogName Application -Source "SAR" -EventID 1046 -EntryType Information -Message "First Run: All settings configured!"
 
     #Done
     Write-Host "All necessary settings are configured." -NoNewline -ForegroundColor Green
     Write-Host "Please rerun the script to start the ESXi Config Backup!" -ForegroundColor Green
 
-    #Create First Run log file
-    New-Item -Path $FirstRun -ItemType File -Force
-    Add-Content -Path $FirstRun -Value "--------------------!First run!---------------------------------------------------------------"
-    Add-Content -Path $FirstRun -Value (Get-Date -Format "dddd dd/MM/yyyy HH:mm")
-    Add-Content -Path $FirstRun -Value "Do not remove this file! Except, you know what you are doing!"
-    Add-Content -Path $FirstRun -Value "----------------------------------------------------------------------------------------------"
-
     exit
-
-}
-
-#Check if Backup Log file exist
-if (-not (Test-Path $LOGFile)) {
-    
-    #Create Backup log file
-    New-Item -Path $LOGFile -ItemType File -Force
 
 }
 
@@ -117,6 +101,14 @@ if ($ChangePwOrAddUser) {
         }
 
     }
+
+}
+
+#Check if Backup Log file exist
+if (-not (Test-Path $LOGFile)) {
+
+    #Create Backup log file
+    New-Item -Path $LOGFile -ItemType File -Force
 
 }
 
