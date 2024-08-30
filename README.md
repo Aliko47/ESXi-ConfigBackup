@@ -11,9 +11,9 @@ The script has 3 parameters:
 .\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -ChangePwOrAddUser $true/$false
 ```
 
-- **Mandatory** Username: The Username which need to loggin to vCenter/ESXi-Host
-- **Mandatory** vCenter: vCenter/ESXi-Host Hostname or IP-Adress
-- **Not Mandatory** ChangePwOrAddUser: Boolean. If you want to change a password which is stored in VICredentialStore or add a new user to it. Otherwise leave it without this parameters.
+- **!Mandatory! -Username**: The Username which need to loggin to vCenter/ESXi-Host
+- **!Mandatory! -vCenter**: vCenter/ESXi-Host Hostname or IP-Adress
+- **!Not Mandatory! -ChangePwOrAddUser**: Boolean. If you want to change a password which is stored in VICredentialStore or add a new user to it. Otherwise leave it without this parameters.
 
 
 ## Requirements
@@ -41,6 +41,11 @@ Testet on vCenter Server version:
 - vCenter Server v6.7
 - vCenter Server v7.0.3
 - vCenter Server v8.0.3
+
+Testet on ESXi version:
+- ESXi v6.7
+- ESXi v7.0.3
+- ESXi v8.0.3
 
 ## Usage
 ### Befor starting
@@ -89,9 +94,22 @@ nt authority\system
 Now you just need to repeat steps from [First start](https://github.com/Aliko47/ESXi-ConfigBackup/tree/main?tab=readme-ov-file#first-start-firststart)
 
 ### Change Passwort or add User
-...
+If the password needs to be changed, the parameter ```-ChangePwOrAddUser``` must also be set to ```$true```: 
+```powershell
+.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -ChangePwOrAddUser $true
+```
+The user's password is only changed if it previously existed in the VICredenetialStore and the script is then terminated. If the user does not exist, a new user is created.
+
 ## Logging
-...
+In addition to the log file that is created in the logs directory with the name **Backups.log**, logging is also carried out in the EventLog -> Applications.
+An event log TAG with the name SAR is created for this purpose when the script is started for the first time. The following IDs are documented:
+ID | Meaning 
+-------- | -------- 
+1047   | ESXi Config Backup sucessfull
+1048   | Error: See Exception Message
+1049   | VICredentials: Changed password from: $Username
+1050   | VICredentials: New User added: $Username
+
 ## Authors
 
 - [@Aliko47](https://github.com/Aliko47)
