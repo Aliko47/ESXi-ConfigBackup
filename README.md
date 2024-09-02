@@ -8,7 +8,7 @@ The credentials for the ESXi-Host/vCenter is stored in the VICredentialStore so 
 
 The script has 4 parameters:
 ```powershell
-.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -FirstRun $true/$false -ChangePwOrAddUser $true/$false
+.\ESXi-ConfigBackup.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -FirstRun $true/$false -ChangePwOrAddUser $true/$false
 ```
 
 - **!Mandatory! -Username**: The Username which need to loggin to vCenter/ESXi-Host
@@ -61,7 +61,7 @@ Befor starting, the script should be modified in the following lines:
 ### First start
 When running the script for the first time, it must be started manually as administrator. Open a new PowerShell window as administrator and go to the script path. Then run the following:
 ```powershell
-.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -FirstRun $true
+.\ESXi-ConfigBackup.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -FirstRun $true
 ```
 Instead of the Hostname you can also type in the IP-Adress. The ```-Username``` and ```-vCenter``` is mandatory! Furthermore, the parameter ```-FirstRun``` must be set to ```$true```. If you have no vCenter, you can also use the ESXi-Host IP-Adress/Hostname. 
 
@@ -77,7 +77,7 @@ After settings has been configured, the script is closed without running a backu
 ### Manually start
 As soon as the first start has been performed, the script can be started directly from a powershell console without entering the password: 
 ```powershell
-.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld>
+.\ESXi-ConfigBackup.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld>
 ```
 It is recommended that you create a task via Microsoft task schedule and save it automatically every day. See next chapter.
 
@@ -100,7 +100,7 @@ Now you just need to repeat steps from [First start](#FirstStart).
 ### Change Passwort or add User
 If the password needs to be changed, the parameter ```-ChangePwOrAddUser``` must also be set to ```$true```: 
 ```powershell
-.\ESXi-BackupConfig.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -ChangePwOrAddUser $true
+.\ESXi-ConfigBackup.ps1 -Username <vCenter-Admin@vsphere.Local> -vCenter <vcenter.your.domain.tld> -ChangePwOrAddUser $true
 ```
 The user's password is only changed if it previously existed in the VICredenetialStore. If the user does not exist, a new user is created. After the user has been changed or added, the script is closed without running a backup.
 
