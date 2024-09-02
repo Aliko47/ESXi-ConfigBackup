@@ -70,6 +70,7 @@ After starting the script for the first time, the following PowerCLI configurati
 - ParticipateInCEIP = False
 - DefaultVIServerMode = single
 - InvalidCertificateAction = Ignore (If you do not want to ignore the certificate and you have a valid one, you can set this to "Warn". Check the script at line 37)
+- The user you have logged in with will be added to the VICredentialStore so that you no longer need a password to run the script. 
 
 After settings has been configured, the script is closed without running a backup.
 
