@@ -127,7 +127,7 @@ try {
     Get-VMhost | Get-VMHostFirmware -BackupConfiguration -DestinationPath $BackupPath
 
     #Get All Files modified more than the last "$Days" days
-    Get-ChildItem -Path $BackupRootPath -Recurse -File | Where-Object { $_.LastWriteTime -lt $ExpiredDate } | Remove-Item –Force -Verbose
+    Get-ChildItem -Path $BackupRootPath -Recurse -File | Where-Object { $_.LastWriteTime -lt $ExpiredDate } | Remove-Item -Force -Verbose
 
     #Fill the log file
     Add-Content -Path $LOGFile -Value ""
